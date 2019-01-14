@@ -1,0 +1,14 @@
+{
+  "name": "scrappers",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "anticaptcha": "^1.0.5",
+    "axios": "^0.18.0",
+    "puppeteer": "^1.11.0"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
+}
