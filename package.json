@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "repository": "github:danielgatis/puppeteer-recaptcha-solver",
   "dependencies": {
     "axios": "^0.18.0",
     "puppeteer": "^1.11.0"
