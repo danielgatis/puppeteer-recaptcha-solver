@@ -7,4 +7,6 @@ Puppeteer Recatpcha Solver
 How to use
 =====
 
-see: https://raw.githubusercontent.com/danielgatis/puppeteer-recaptcha-solver/master/examples/demo.js
+    $ cd puppeteer-recaptcha-solver
+    $ npm install
+    $ node examples/demo.js
