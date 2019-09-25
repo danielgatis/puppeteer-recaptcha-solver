@@ -9,12 +9,6 @@ function rdn (min, max) {
 
 async function solve (page) {
   try {
-    await page.evaluateOnNewDocument(() => {
-      Object.defineProperty(navigator, 'webdriver', {
-        get: () => false
-      })
-    })
-
     await page.waitForFunction(() => {
       const iframe = document.querySelector('iframe[src*="api2/anchor"]')
       if (!iframe) return false
@@ -40,6 +34,7 @@ async function solve (page) {
     const imageFrame = frames.find(frame => frame.url().includes('api2/bframe'))
     const audioButton = await imageFrame.$('#recaptcha-audio-button')
     await audioButton.click({ delay: rdn(30, 150) })
+
     await page.waitForFunction(() => {
       const iframe = document.querySelector('iframe[src*="api2/bframe"]')
       if (!iframe) return false
@@ -67,12 +62,12 @@ async function solve (page) {
       url: 'https://api.wit.ai/speech?v=20170307',
       data: new Uint8Array(audioBytes).buffer,
       headers: {
-        'Authorization': 'Bearer JVHWCNWJLWLGN6MFALYLHAPKUFHMNTAC',
+        Authorization: 'Bearer JVHWCNWJLWLGN6MFALYLHAPKUFHMNTAC',
         'Content-Type': 'audio/mpeg3'
       }
     })
 
-    const audioTranscript = response.data['_text'].trim()
+    const audioTranscript = response.data._text.trim()
     const input = await imageFrame.$('#audio-response')
     await input.click({ delay: rdn(30, 150) })
     await input.type(audioTranscript, { delay: rdn(30, 75) })
