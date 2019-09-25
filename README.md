@@ -16,6 +16,7 @@ First of all, install and run the [tor project](https://www.torproject.org/) on 
 Clone this project and run [examples/demo.js](examples/demo.js):
 
 ```sh
+  $ git clone https://github.com/danielgatis/puppeteer-recaptcha-solver.git
   $ cd puppeteer-recaptcha-solver
   $ npm install
   $ node examples/demo.js
