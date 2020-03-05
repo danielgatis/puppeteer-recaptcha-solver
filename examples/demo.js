@@ -5,51 +5,53 @@ const Tor = require('tor-control-promise')
 const solve = require('../index.js')
 
 async function run () {
-  const tor = new Tor({
-    host: '127.0.0.1',
-    port: 9051,
-    password: 'tor'
-  })
+  puppeteer.use(pluginStealth())
+  extras = ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
 
   try {
+    const tor = new Tor({
+      host: '127.0.0.1',
+      port: 9051,
+      password: 'tor'
+    })
+
     await tor.connect()
     await tor.signalNewnym()
-  } catch (e) {
-    console.error(e)
-    console.log('tor control is off!')
-    process.exit()
-  }
 
-  puppeteer.use(pluginStealth())
+    console.log('tor control is on!')
+    extras.push('--proxy-server=socks5://127.0.0.1:9050')
+  } catch (e) {
+    console.log('tor control is off!')
+  }
 
   const browser1 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=0,0']
+    args: ['--window-size=360,500', '--window-position=0,0'].concat(extras)
   })
 
   const browser2 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=360,0']
+    args: ['--window-size=360,500', '--window-position=360,0'].concat(extras)
   })
 
   const browser3 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=720,0']
+    args: ['--window-size=360,500', '--window-position=720,0'].concat(extras)
   })
 
   const browser4 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=0,500']
+    args: ['--window-size=360,500', '--window-position=0,500'].concat(extras)
   })
 
   const browser5 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=360,500']
+    args: ['--window-size=360,500', '--window-position=360,500'].concat(extras)
   })
 
   const browser6 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=720,500']
+    args: ['--window-size=360,500', '--window-position=720,500'].concat(extras)
   })
 
   const page1 = await browser1.newPage()
