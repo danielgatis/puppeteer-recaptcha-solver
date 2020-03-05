@@ -24,32 +24,32 @@ async function run () {
 
   const browser1 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=0,0']
+    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=0,0']
   })
 
   const browser2 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=360,0']
+    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=360,0']
   })
 
   const browser3 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=720,0']
+    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=720,0']
   })
 
   const browser4 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=0,500']
+    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=0,500']
   })
 
   const browser5 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=360,500']
+    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=360,500']
   })
 
   const browser6 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=720,500']
+    args: ['--window-size=360,500', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9050', '--window-position=720,500']
   })
 
   const page1 = await browser1.newPage()
