@@ -6,7 +6,7 @@
   "repository": "github:danielgatis/puppeteer-recaptcha-solver",
   "dependencies": {
     "axios": "^0.19.2",
-    "puppeteer": "https://github.com/GoogleChrome/puppeteer#11ff374ca3e7d06a3be4278b85ccee73392354e7",
+    "puppeteer": "^2.1.1",
     "puppeteer-extra": "^3.1.9",
     "puppeteer-extra-plugin-stealth": "^2.4.9"
   }
