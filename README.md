@@ -26,7 +26,7 @@ Clone this project and run [examples/demo.js](examples/demo.js):
 
 ![](https://user-images.githubusercontent.com/3437378/82528851-b14e5a80-9b07-11ea-9f30-6f4fbef0ff1f.png)
 
-Sometimes you are get blocked because of the reputation of the `tor` IPs. To avoid this you can try to buy some residential proxies or you can try run a simple version of demo witout a proxy.
+Sometimes you are blocked because of the reputation of the tor's IPs. To avoid this, you can try to buy some residential proxies or run a simple version of the demo without a proxy.
 
 ```
 $ node examples/demo-wo-proxy.js
