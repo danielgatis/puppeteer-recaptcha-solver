@@ -44,7 +44,7 @@ async function solve (page) {
 
     const audioLink = await page.evaluate(() => {
       const iframe = document.querySelector('iframe[src*="api2/bframe"]')
-      return iframe.contentWindow.document.querySelector('.rc-audiochallenge-tdownload-link').href
+      return iframe.contentWindow.document.querySelector('#audio-source').src
     })
 
     const audioBytes = await page.evaluate(audioLink => {
