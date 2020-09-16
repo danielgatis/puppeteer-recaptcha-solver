@@ -97,7 +97,7 @@ async function solve(page) {
 
   } catch (e) {
     console.log(e)
-    return ''
+    return false
   }
 }
 
