@@ -44,7 +44,7 @@ async function solve(page) {
         }, { timeout: 1000 })
       } catch (error) {
         console.log('download link not found')
-        return false
+        return null
       }
 
       const audioLink = await page.evaluate(() => {
@@ -72,7 +72,7 @@ async function solve(page) {
         }
       })
 
-      const audioTranscript = response.data._text.trim()
+      const audioTranscript = response.data.text.trim()
       const input = await imageFrame.$('#audio-response')
       await input.click({ delay: rdn(30, 150) })
       await input.type(audioTranscript, { delay: rdn(30, 75) })
@@ -95,7 +95,7 @@ async function solve(page) {
     }
   } catch (e) {
     console.log(e)
-    return false
+    return null
   }
 }
 
