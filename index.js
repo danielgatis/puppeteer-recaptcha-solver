@@ -64,7 +64,7 @@ async function solve(page) {
       const response = await axios({
         httsAgent,
         method: 'post',
-        url: 'https://api.wit.ai/speech?v=20170307',
+        url: 'https://api.wit.ai/speech',
         data: new Uint8Array(audioBytes).buffer,
         headers: {
           Authorization: 'Bearer JVHWCNWJLWLGN6MFALYLHAPKUFHMNTAC',
