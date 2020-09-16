@@ -47,7 +47,6 @@ async function solve(page) {
         return false
       }
 
-
       const audioLink = await page.evaluate(() => {
         const iframe = document.querySelector('iframe[src*="api2/bframe"]')
         return iframe.contentWindow.document.querySelector('#audio-source').src
@@ -94,7 +93,6 @@ async function solve(page) {
         console.log('multiple audio')
       }
     }
-
   } catch (e) {
     console.log(e)
     return false
