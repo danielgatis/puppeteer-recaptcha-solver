@@ -34,6 +34,7 @@ async function solve(page) {
     const imageFrame = frames.find(frame => frame.url().includes('api2/bframe'))
     const audioButton = await imageFrame.$('#recaptcha-audio-button')
     await audioButton.click({ delay: rdn(30, 150) })
+
     while (true) {
       try {
         await page.waitForFunction(() => {
@@ -72,6 +73,12 @@ async function solve(page) {
         }
       })
 
+      if (undefined == response.data.text) {
+        const reloadButton = await imageFrame.$('#recaptcha-reload-button')
+        await reloadButton.click({ delay: rdn(30, 150) })
+        continue
+      }
+
       const audioTranscript = response.data.text.trim()
       const input = await imageFrame.$('#audio-response')
       await input.click({ delay: rdn(30, 150) })
@@ -89,8 +96,9 @@ async function solve(page) {
         }, { timeout: 1000 })
 
         return page.evaluate(() => document.getElementById('g-recaptcha-response').value)
-      } catch (error) {
+      } catch (e) {
         console.log('multiple audio')
+        continue
       }
     }
   } catch (e) {
