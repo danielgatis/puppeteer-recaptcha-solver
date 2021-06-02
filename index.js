@@ -23,12 +23,22 @@ async function solve(page) {
     await checkbox.click({ delay: rdn(30, 150) })
 
     await page.waitForFunction(() => {
-      const iframe = document.querySelector('iframe[src*="api2/bframe"]')
-      if (!iframe) return false
+      const iframe1 = document.querySelector('iframe[src*="api2/anchor"]')
+      if (iframe1.contentWindow.document.querySelector('.recaptcha-checkbox-checked')) return true
 
-      const img = iframe.contentWindow.document.querySelector('.rc-image-tile-wrapper img')
+      const iframe2 = document.querySelector('iframe[src*="api2/bframe"]')
+      if (!iframe2) return false
+
+      const img = iframe2.contentWindow.document.querySelector('.rc-image-tile-wrapper img')
       return img && img.complete
     })
+
+    const success = await page.evaluate(() => {
+      const iframe = document.querySelector('iframe[src*="api2/anchor"]')
+      if (iframe.contentWindow.document.querySelector('.recaptcha-checkbox-checked')) return true
+    })
+
+    if (success) return true
 
     frames = await page.frames()
     const imageFrame = frames.find(frame => frame.url().includes('api2/bframe'))
