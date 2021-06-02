@@ -38,7 +38,7 @@ async function solve(page) {
       if (iframe.contentWindow.document.querySelector('.recaptcha-checkbox-checked')) return true
     })
 
-    if (success) return true
+    if (success) return await page.evaluate(() => document.getElementById('g-recaptcha-response').value)
 
     frames = await page.frames()
     const imageFrame = frames.find(frame => frame.url().includes('api2/bframe'))
@@ -105,7 +105,7 @@ async function solve(page) {
           return !!iframe.contentWindow.document.querySelector('#recaptcha-anchor[aria-checked="true"]')
         }, { timeout: 1000 })
 
-        return page.evaluate(() => document.getElementById('g-recaptcha-response').value)
+        return await page.evaluate(() => document.getElementById('g-recaptcha-response').value)
       } catch (e) {
         console.log('multiple audio')
         continue
