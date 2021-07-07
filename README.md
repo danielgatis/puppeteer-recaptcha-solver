@@ -1,4 +1,4 @@
-# Puppeteer Recatpcha Solver
+# Puppeteer Recaptcha Solver
 
 ![demo](demo.gif)
 
