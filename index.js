@@ -97,7 +97,6 @@ async function solve(page) {
 
         return page.evaluate(() => document.getElementById('g-recaptcha-response').value)
       } catch (e) {
-        console.log('multiple audio')
         continue
       }
     }
