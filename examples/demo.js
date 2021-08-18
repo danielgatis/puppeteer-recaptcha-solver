@@ -8,32 +8,32 @@ async function run () {
 
   const browser1 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--window-position=000,000', '--no-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9060']
+    args: ['--window-size=360,500', '--window-position=000,000', '--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--proxy-server=socks5://127.0.0.1:9060']
   })
 
   const browser2 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--window-position=360,000', '--no-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9061']
+    args: ['--window-size=360,500', '--window-position=360,000', '--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--proxy-server=socks5://127.0.0.1:9061']
   })
 
   const browser3 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--window-position=720,000', '--no-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9062']
+    args: ['--window-size=360,500', '--window-position=720,000', '--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--proxy-server=socks5://127.0.0.1:9062']
   })
 
   const browser4 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--window-position=000,500', '--no-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9063']
+    args: ['--window-size=360,500', '--window-position=000,500', '--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--proxy-server=socks5://127.0.0.1:9063']
   })
 
   const browser5 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--window-position=360,500', '--no-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9064']
+    args: ['--window-size=360,500', '--window-position=360,500', '--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--proxy-server=socks5://127.0.0.1:9064']
   })
 
   const browser6 = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--window-position=720,500', '--no-sandbox', '--disable-dev-shm-usage', '--proxy-server=socks5://127.0.0.1:9065']
+    args: ['--window-size=360,500', '--window-position=720,500', '--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--proxy-server=socks5://127.0.0.1:9065']
   })
 
   const page1 = await browser1.newPage()
