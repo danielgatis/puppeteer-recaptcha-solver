@@ -8,7 +8,7 @@ async function run () {
 
   const browser = await puppeteer.launch({
     headless: false,
-    args: ['--window-size=360,500', '--window-position=000,000', '--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security']
+    args: ['--window-size=360,500', '--window-position=000,000', '--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']
   })
 
   const page = await browser.newPage()
