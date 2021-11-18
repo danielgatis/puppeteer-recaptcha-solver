@@ -42,10 +42,10 @@ async function solve(page) {
           if (!iframe) return false
 
           return !!iframe.contentWindow.document.querySelector('.rc-audiochallenge-tdownload-link')
-        }, { timeout: 1000 })
-      } catch (error) {
-        console.log('download link not found')
-        return null
+        }, { timeout: 5000 })
+      } catch (e) {
+        console.error(e)
+        continue
       }
 
       const audioLink = await page.evaluate(() => {
@@ -65,7 +65,7 @@ async function solve(page) {
       const response = await axios({
         httsAgent,
         method: 'post',
-        url: 'https://api.wit.ai/speech',
+        url: 'https://api.wit.ai/speech?v=2021092',
         data: new Uint8Array(audioBytes).buffer,
         headers: {
           Authorization: 'Bearer JVHWCNWJLWLGN6MFALYLHAPKUFHMNTAC',
@@ -73,13 +73,16 @@ async function solve(page) {
         }
       })
 
-      if (undefined == response.data.text) {
+      let audioTranscript = null;
+
+      try{
+        audioTranscript = response.data.match('"text": "(.*)",')[1].trim()
+      } catch(e){
         const reloadButton = await imageFrame.$('#recaptcha-reload-button')
         await reloadButton.click({ delay: rdn(30, 150) })
         continue
       }
 
-      const audioTranscript = response.data.text.trim()
       const input = await imageFrame.$('#audio-response')
       await input.click({ delay: rdn(30, 150) })
       await input.type(audioTranscript, { delay: rdn(30, 75) })
@@ -93,15 +96,16 @@ async function solve(page) {
           if (!iframe) return false
 
           return !!iframe.contentWindow.document.querySelector('#recaptcha-anchor[aria-checked="true"]')
-        }, { timeout: 1000 })
+        }, { timeout: 5000 })
 
         return page.evaluate(() => document.getElementById('g-recaptcha-response').value)
       } catch (e) {
+        console.error(e)
         continue
       }
     }
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return null
   }
 }
