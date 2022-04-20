@@ -77,7 +77,7 @@ async function solve(page) {
 
       try {
         audioTranscript = response.data.match('"text": "(.*)",')[1].trim()
-      } catch(e){
+      } catch (e) {
         const reloadButton = await imageFrame.$('#recaptcha-reload-button')
         await reloadButton.click({ delay: rdn(30, 150) })
         continue
