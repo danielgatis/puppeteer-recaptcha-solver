@@ -22,14 +22,20 @@ async function solve(page) {
     const checkbox = await recaptchaFrame.$('#recaptcha-anchor')
     await checkbox.click({ delay: rdn(30, 150) })
 
-    await page.waitForFunction(() => {
-      const iframe = document.querySelector('iframe[src*="api2/bframe"]')
-      if (!iframe) return false
-
+    const challenge = await page.waitForFunction(() => {
+      let iframe;
+      iframe = document.querySelector('iframe[src*="api2/anchor"]')
+      if(iframe == null || !!iframe.contentWindow.document.querySelector('#recaptcha-anchor[aria-checked="true"]')){
+        return "no challenge"
+      }
+      iframe = document.querySelector('iframe[src*="api2/bframe"]')
       const img = iframe.contentWindow.document.querySelector('.rc-image-tile-wrapper img')
-      return img && img.complete
-    })
-
+      if(img && img.complete){
+        return "there's a challenge"
+      }
+    }, { timeout: 5000 })
+    if (challenge._remoteObject.value === "no challenge") return
+    
     frames = await page.frames()
     const imageFrame = frames.find(frame => frame.url().includes('api2/bframe'))
     const audioButton = await imageFrame.$('#recaptcha-audio-button')
@@ -65,7 +71,7 @@ async function solve(page) {
       const response = await axios({
         httsAgent,
         method: 'post',
-        url: 'https://api.wit.ai/speech?v=2021092',
+        url: 'https://api.wit.ai/speech?v=20220622',
         data: new Uint8Array(audioBytes).buffer,
         headers: {
           Authorization: 'Bearer JVHWCNWJLWLGN6MFALYLHAPKUFHMNTAC',
@@ -93,9 +99,9 @@ async function solve(page) {
       try {
         await page.waitForFunction(() => {
           const iframe = document.querySelector('iframe[src*="api2/anchor"]')
-          if (!iframe) return false
-
-          return !!iframe.contentWindow.document.querySelector('#recaptcha-anchor[aria-checked="true"]')
+          if(iframe == null || !!iframe.contentWindow.document.querySelector('#recaptcha-anchor[aria-checked="true"]')){
+            return true
+          }
         }, { timeout: 5000 })
 
         return page.evaluate(() => document.getElementById('g-recaptcha-response').value)
