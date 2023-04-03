@@ -61,9 +61,9 @@ async function solve(page) {
         })()
       }, audioLink)
 
-      const httsAgent = new https.Agent({ rejectUnauthorized: false })
+      const httpsAgent = new https.Agent({ rejectUnauthorized: false })
       const response = await axios({
-        httsAgent,
+        httpsAgent,
         method: 'post',
         url: 'https://api.wit.ai/speech?v=2021092',
         data: new Uint8Array(audioBytes).buffer,
