@@ -1,4 +1,4 @@
-import { fetch } from 'undici'
+const undici = require('undici')
 
 function rdn(min, max) {
   min = Math.ceil(min)
@@ -60,7 +60,7 @@ async function solve(page) {
         })()
       }, audioLink)
 
-      const response = await fetch('https://api.wit.ai/speech?v=2021092', {
+      const response = await undici.fetch('https://api.wit.ai/speech?v=2021092', {
         method: 'POST',
         body: new Uint8Array(audioBytes),
         headers: {
