@@ -1,5 +1,4 @@
-const axios = require('axios')
-const https = require('https')
+const undici = require('undici')
 
 function rdn(min, max) {
   min = Math.ceil(min)
@@ -67,22 +66,19 @@ async function solve(page) {
         })()
       }, audioLink)
 
-      const httsAgent = new https.Agent({ rejectUnauthorized: false })
-      const response = await axios({
-        httsAgent,
-        method: 'post',
-        url: 'https://api.wit.ai/speech?v=20220622',
-        data: new Uint8Array(audioBytes).buffer,
+      const response = await undici.fetch('https://api.wit.ai/speech?v=20220622', {
+        method: 'POST',
+        body: new Uint8Array(audioBytes),
         headers: {
           Authorization: 'Bearer JVHWCNWJLWLGN6MFALYLHAPKUFHMNTAC',
           'Content-Type': 'audio/mpeg3'
         }
-      })
+      }).then((res) => res.text())
 
-      let audioTranscript = null;
+      let audioTranscript = null
 
       try {
-        audioTranscript = response.data.match('"text": "(.*)",')[1].trim()
+        audioTranscript = response.match('"text": "(.*)",')[1].trim()
       } catch (e) {
         const reloadButton = await imageFrame.$('#recaptcha-reload-button')
         await reloadButton.click({ delay: rdn(30, 150) })

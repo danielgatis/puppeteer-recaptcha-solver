@@ -5,9 +5,9 @@
   "license": "MIT",
   "repository": "github:danielgatis/puppeteer-recaptcha-solver",
   "dependencies": {
-    "axios": "^0.27.2",
     "puppeteer": "^16.1.0",
     "puppeteer-extra": "^3.3.4",
-    "puppeteer-extra-plugin-stealth": "^2.11.0"
+    "puppeteer-extra-plugin-stealth": "^2.11.0",
+    "undici": "^5.21.0"
   }
 }

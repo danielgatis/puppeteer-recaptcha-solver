@@ -1,1 +1,42 @@
-node_modules/
+# ignore compiled Python files
+*.pyc
+*.pyo
+
+# ignore swap files created by text editors
+*.swp
+*.swo
+
+# ignore backup files
+*.orig
+
+# ignore local settings file
+/web/settings_local.py
+
+# ignore pip log file
+pip-log.txt
+
+# ignore environment file
+/.env
+
+# ignore directories
+/var/
+/dump/
+/src/
+/ioweb
+/node_modules/
+
+# ignore version control directory
+/.hg/
+
+# ignore pytest cache directory
+/.pytest_cache/
+
+# ignore build and coverage directories
+/build/
+/.coverage
+
+# ignore tox directory and generated files
+/.tox/
+*.egg-info
+/dist/
+
