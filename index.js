@@ -22,19 +22,22 @@ async function solve(page) {
     await checkbox.click({ delay: rdn(30, 150) })
 
     const challenge = await page.waitForFunction(() => {
-      let iframe;
-      iframe = document.querySelector('iframe[src*="api2/anchor"]')
+      let iframe = document.querySelector('iframe[src*="api2/anchor"]')
       if(iframe == null || !!iframe.contentWindow.document.querySelector('#recaptcha-anchor[aria-checked="true"]')){
-        return "no challenge"
+        return false
       }
+
       iframe = document.querySelector('iframe[src*="api2/bframe"]')
       const img = iframe.contentWindow.document.querySelector('.rc-image-tile-wrapper img')
-      if(img && img.complete){
-        return "there's a challenge"
+      if (img && img.complete) {
+        return true
       }
+
+      return false
     }, { timeout: 5000 })
-    if (challenge._remoteObject.value === "no challenge") return
-    
+
+    if (!challenge) return
+
     frames = await page.frames()
     const imageFrame = frames.find(frame => frame.url().includes('api2/bframe'))
     const audioButton = await imageFrame.$('#recaptcha-audio-button')
