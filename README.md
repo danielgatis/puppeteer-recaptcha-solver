@@ -2,6 +2,12 @@
 
 ![demo](demo.gif)
 
+## Sponsors
+
+![demo](capsolver.gif)
+
+The [capsolver.com](http://capsolver.com) is an AI-powered service that provides automatic captcha solving capabilities. It supports a range of captcha types, including reCAPTCHA, hCaptcha, and FunCaptcha, AWS Captcha, Geetest, Akamai Web, BMP, Imperva / Incapsula, image captcha among others.
+
 ## How to use
 
 First of all, install and run the [tor project](https://www.torproject.org/) on your machine. Mac OS example:
