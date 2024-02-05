@@ -4,9 +4,11 @@
 
 ## Sponsors
 
-![demo](capsolver.gif)
+<a href="https://www.capsolver.com/?utm_source=github&utm_medium=puppeter_recaptcha_solver&utm_campaign=banner_github">
+  <img src="capsolver.jpg" />
+</a>
 
-The [capsolver.com](http://capsolver.com) is an AI-powered service that provides automatic captcha solving capabilities. It supports a range of captcha types, including reCAPTCHA, hCaptcha, and FunCaptcha, AWS Captcha, Geetest, Akamai Web, BMP, Imperva / Incapsula, image captcha among others.
+The [capsolver.com](https://www.capsolver.com/?utm_source=github&utm_medium=puppeter_recaptcha_solver&utm_campaign=banner_github) is an AI-powered service that provides automatic captcha solving capabilities. It supports a range of captcha types, including reCAPTCHA, hCaptcha, and FunCaptcha, AWS Captcha, Geetest, Akamai Web, BMP, Imperva / Incapsula, image captcha among others.
 
 ## How to use
 
