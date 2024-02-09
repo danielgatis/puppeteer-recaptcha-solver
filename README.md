@@ -4,7 +4,7 @@
 
 ## Sponsors
 
-<a href="https://www.capsolver.com/?utm_source=github&utm_medium=puppeter_recaptcha_solver&utm_campaign=banner_github">
+<a href="https://www.capsolver.com/?utm_source=github&utm_medium=banner_github&utm_campaign=puppeter_recaptcha_solver">
   <img src="capsolver.jpg" />
 </a>
 
