@@ -1,5 +1,8 @@
 # Puppeteer Recaptcha Solver
 
+> **⚠️ Maintenance mode (read-only)**
+> This project is no longer actively developed. Use [playwright-recaptcha-solver](https://github.com/danielgatis/playwright-recaptcha-solver) instead.
+
 ![demo](demo.gif)
 
 ## How to use
