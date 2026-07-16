@@ -6,49 +6,46 @@ function rdn(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
+async function waitForFrame(page, urlPart) {
+  let frame = page.frames().find(f => f.url().includes(urlPart))
+  if (frame) return frame
+
+  return new Promise(resolve => {
+    page.on('framenavigated', function onFrame(f) {
+      if (f.url().includes(urlPart)) {
+        page.off('framenavigated', onFrame)
+        resolve(f)
+      }
+    })
+  })
+}
+
 async function solve(page) {
   try {
-    console.log('[1] waiting for anchor iframe...')
-    await page.waitForFunction(() => {
-      const iframe = document.querySelector('iframe[src*="api2/anchor"]')
-      if (!iframe) return false
+    console.log('[1] waiting for anchor frame...')
+    const anchorFrame = await waitForFrame(page, 'api2/anchor')
+    await anchorFrame.waitForSelector('#recaptcha-anchor')
+    console.log('[1] anchor frame ready')
 
-      return !!iframe.contentWindow.document.querySelector('#recaptcha-anchor')
-    })
-    console.log('[1] anchor iframe ready')
-
-    let frames = await page.frames()
-    const recaptchaFrame = frames.find(frame => frame.url().includes('api2/anchor'))
-
-    const checkbox = await recaptchaFrame.$('#recaptcha-anchor')
+    const checkbox = await anchorFrame.$('#recaptcha-anchor')
     console.log('[2] clicking checkbox...')
     await checkbox.click({ delay: rdn(30, 150) })
 
     console.log('[3] waiting for challenge bframe...')
-    const challenge = await page.waitForFunction(() => {
-      let iframe = document.querySelector('iframe[src*="api2/anchor"]')
-      if(iframe == null || !!iframe.contentWindow.document.querySelector('#recaptcha-anchor[aria-checked="true"]')){
-        return false
-      }
+    let imageFrame
+    try {
+      await anchorFrame.waitForFunction(() => {
+        return !document.querySelector('#recaptcha-anchor[aria-checked="true"]')
+      }, { timeout: 5000 })
 
-      iframe = document.querySelector('iframe[src*="api2/bframe"]')
-      if (!iframe || !iframe.contentWindow) return false
-      const img = iframe.contentWindow.document.querySelector('.rc-image-tile-wrapper img')
-      if (img && img.complete) {
-        return true
-      }
-
-      return false
-    }, { timeout: 5000 })
-
-    if (!challenge) {
+      imageFrame = await waitForFrame(page, 'api2/bframe')
+      await imageFrame.waitForSelector('.rc-image-tile-wrapper img', { timeout: 5000 })
+      console.log('[3] challenge appeared')
+    } catch (e) {
       console.log('[3] no challenge, done')
       return
     }
-    console.log('[3] challenge appeared')
 
-    frames = await page.frames()
-    const imageFrame = frames.find(frame => frame.url().includes('api2/bframe'))
     const audioButton = await imageFrame.$('#recaptcha-audio-button')
     console.log('[4] clicking audio button...')
     await audioButton.click({ delay: rdn(30, 150) })
@@ -58,22 +55,14 @@ async function solve(page) {
       iteration++
       console.log(`[loop ${iteration}] waiting for audio download link...`)
       try {
-        await page.waitForFunction(() => {
-          const iframe = document.querySelector('iframe[src*="api2/bframe"]')
-          if (!iframe) return false
-
-          return !!iframe.contentWindow.document.querySelector('.rc-audiochallenge-tdownload-link')
-        }, { timeout: 5000 })
+        await imageFrame.waitForSelector('.rc-audiochallenge-tdownload-link', { timeout: 5000 })
       } catch (e) {
         console.error(`[loop ${iteration}] timeout waiting for audio link:`, e.message)
         continue
       }
       console.log(`[loop ${iteration}] audio link found`)
 
-      const audioLink = await page.evaluate(() => {
-        const iframe = document.querySelector('iframe[src*="api2/bframe"]')
-        return iframe.contentWindow.document.querySelector('#audio-source').src
-      })
+      const audioLink = await imageFrame.$eval('#audio-source', el => el.src)
       console.log(`[loop ${iteration}] audio link:`, audioLink)
 
       const audioBytes = await page.evaluate(audioLink => {
@@ -123,10 +112,8 @@ async function solve(page) {
             const error = document.querySelector('.rc-audiochallenge-error-message')
             return !!(error && error.innerText && error.innerText.trim().length > 0)
           }, { timeout: 5000 }),
-          page.waitForFunction(() => {
-            const anchor = document.querySelector('iframe[src*="api2/anchor"]')
-            if (!anchor || !anchor.contentWindow) return false
-            return !!anchor.contentWindow.document.querySelector('#recaptcha-anchor[aria-checked="true"]')
+          anchorFrame.waitForFunction(() => {
+            return !!document.querySelector('#recaptcha-anchor[aria-checked="true"]')
           }, { timeout: 5000 })
         ])
       } catch (e) {
