@@ -15,7 +15,14 @@ async function run () {
   await page.setDefaultNavigationTimeout(0)
   page.goto('https://www.google.com/recaptcha/api2/demo')
 
-  solve(page)
+  const token = await solve(page)
+  console.log('token:', token ? token.substring(0, 30) + '...' : null)
+
+  if (token) {
+    await page.click('#recaptcha-demo-submit')
+    console.log('submitted!')
+    await browser.close()
+  }
 }
 
 console.log('`ctrl + c` to exit')
